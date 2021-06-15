@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include "./TrackList.h"
+#include "./ArtistList.h"
 
 using namespace std;
 
@@ -13,12 +14,20 @@ class ReadFile {
 
     TrackList *readTracks();
     TrackList *readBinaryTracks();
+    ArtistList *readArtists();
+    ArtistList *readBinaryArtists();
+
   private:
     string fileLocation;
-    Track *readTrackLine(string line, ofstream *binaryFile);
     string readValue(stringstream *line);
+
+    Track *readTrackLine(string line, ofstream *binaryFile);
     Track* readBinaryTrackLine(ifstream *binaryFile, int index);
     int calculateBinaryTrackPosition(string variableName, int currentLine);
+
+    Artist *readArtistLine(string line, ofstream *binaryFile);
+    Artist* readBinaryArtistLine(ifstream *binaryFile, int index);
+    int calculateBinaryArtistPosition(string variableName, int currentLine);
 };
 
 #endif

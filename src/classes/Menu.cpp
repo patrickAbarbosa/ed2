@@ -1,7 +1,7 @@
-#include <iostream>
-#include <fstream>
 #include "../headers/Menu.h"
 #include "../headers/ReadFile.h"
+#include <fstream>
+#include <iostream>
 
 using namespace std;
 
@@ -11,9 +11,7 @@ Menu::Menu() {
   loadTrackFile();
 }
 
-Menu::~Menu() {
-  cout << "Stop Menu" << endl;
-}
+Menu::~Menu() { cout << "Stop Menu" << endl; }
 
 void Menu::loadTrackFile(){
   string fileLocation;
@@ -25,7 +23,9 @@ void Menu::loadTrackFile(){
   ReadFile * file;
   file = new ReadFile(fileLocation);
 
-  TrackList *list = file->readBinaryTracks();
+  // TrackList *list = file->readBinaryTracks();
+
+  ArtistList *list = file->readBinaryArtists();
 
   list->printList();
 }
