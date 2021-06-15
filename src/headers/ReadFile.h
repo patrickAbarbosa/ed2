@@ -18,6 +18,7 @@ class ReadFile {
     Track *readTrackLine(string line, ofstream *binaryFile);
     string readValue(stringstream *line);
     Track* readBinaryTrackLine(ifstream *binaryFile, int index);
+    int calculateBinaryTrackPosition(string variableName, int currentLine);
 };
 
 #endif
