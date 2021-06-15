@@ -167,12 +167,20 @@ int calculateColumn(string variableName) {
  * @param variableName
  * @param currentLine
  */
-int calculateBinaryPosition(string variableName, int currentLine) {
+int ReadFile::calculateBinaryTrackPosition(string variableName, int currentLine) {
   int _linearLine = calculateColumn("") * currentLine;
 
   return _linearLine + calculateColumn(variableName);
 }
 
+/**
+ * readTrackLine
+ *
+ * Retorna um objeto Track
+ *
+ * @param line
+ * @param *binaryFile
+ */
 Track* ReadFile::readTrackLine(string line, ofstream *binaryFile) {
   stringstream _line(line);
 
@@ -257,6 +265,43 @@ Track* ReadFile::readTrackLine(string line, ofstream *binaryFile) {
   binaryFile->write(str.c_str(), sizeof(track->time_signature));
 
   return track;
+}
+
+TrackList *ReadFile::readTracks() {
+  string fullFileLocation = "../../" + fileLocation;
+  fstream file(fullFileLocation, fstream::in);
+
+  if (!file.is_open()) {
+    cout << "Erro ao abrir arquivo." << endl;
+
+    exit(1);
+  }
+
+  ofstream binaryFile("../bin/tracks.bin", ofstream::binary);
+
+  if (!binaryFile.is_open()) {
+    cout << "Erro ao abrir arquivo binario" << endl;
+
+    exit(1);
+  }
+
+  string currentLine;
+  TrackList *list = new TrackList();
+  getline(file, currentLine); // Remove first line csv
+
+  while (!file.eof()) {
+    getline(file, currentLine);
+
+    if (currentLine.length() > 0) {
+      Track *currentTrack = readTrackLine(currentLine, &binaryFile);
+      list->insertEnd(currentTrack);
+    }
+  }
+
+  file.close();
+  binaryFile.close();
+
+  return list;
 }
 
 Track* ReadFile::readBinaryTrackLine(ifstream *binaryFile, int index) {
@@ -382,43 +427,6 @@ TrackList *ReadFile::readBinaryTracks() {
     list->insertEnd(track);
   }
 
-  binaryFile.close();
-
-  return list;
-}
-
-TrackList *ReadFile::readTracks() {
-  string fullFileLocation = "../../tracks_example.csv"; // + fileLocation;
-  fstream file(fullFileLocation, fstream::in);
-
-  if (!file.is_open()) {
-    cout << "Erro ao abrir arquivo." << endl;
-
-    exit(1);
-  }
-
-  ofstream binaryFile("../bin/tracks.bin", ofstream::binary);
-
-  if (!binaryFile.is_open()) {
-    cout << "Erro ao abrir arquivo binario" << endl;
-
-    exit(1);
-  }
-
-  string currentLine;
-  TrackList *list = new TrackList();
-  getline(file, currentLine); // Remove first line csv
-
-  while (!file.eof()) {
-    getline(file, currentLine);
-
-    if (currentLine.length() > 0) {
-      Track *currentTrack = readTrackLine(currentLine, &binaryFile);
-      list->insertEnd(currentTrack);
-    }
-  }
-
-  file.close();
   binaryFile.close();
 
   return list;
