@@ -13,21 +13,6 @@ Menu::Menu() {
 
 Menu::~Menu() { cout << "Stop Menu" << endl; }
 
-void Menu::loadTrackFile() {
-  string fileLocation;
-  ifstream binaryFile("../bin/tracks.bin", ifstream::in | ifstream::binary);
-
-  cout << "Digite o local do arquivo tracks: ";
-  cin >> fileLocation;
-
-  ReadFile *file;
-  file = new ReadFile(fileLocation);
-
-  TrackList *list = file->readBinaryTracks();
-
-  list->printList();
-}
-
 void Menu::loadTrackFile(){
   string fileLocation;
   // ifstream binaryFile("../bin/tracks.bin", ifstream::in | ifstream::binary);
@@ -38,7 +23,9 @@ void Menu::loadTrackFile(){
   ReadFile * file;
   file = new ReadFile(fileLocation);
 
-  TrackList *list = file->readBinaryTracks();
+  // TrackList *list = file->readBinaryTracks();
+
+  ArtistList *list = file->readBinaryArtists();
 
   list->printList();
 }

@@ -186,7 +186,6 @@ Track* ReadFile::readTrackLine(string line, ofstream *binaryFile) {
 
   Track *track = new Track;
   string str;
-  int count = 0;
 
   str = readValue(&_line);
   strcpy(track->id, str.c_str());
@@ -425,6 +424,135 @@ TrackList *ReadFile::readBinaryTracks() {
     Track *track = readBinaryTrackLine(&binaryFile, index);
 
     list->insertEnd(track);
+  }
+
+  binaryFile.close();
+
+  return list;
+}
+
+/**
+ * readArtistLine
+ *
+ * Retorna um objeto Artist
+ *
+ * @param line
+ * @param *binaryFile
+ *
+ */
+Artist* ReadFile::readArtistLine(string line, ofstream *binaryFile) {
+  stringstream _line(line);
+
+  Artist *artist = new Artist;
+  string str;
+
+  str = readValue(&_line);
+  strcpy(artist->id, str.c_str());
+  binaryFile->write(artist->id, sizeof(artist->id));
+
+  str = readValue(&_line);
+  artist->followers = atoi(str.c_str());
+  binaryFile->write(str.c_str(), sizeof(artist->followers));
+
+  str = readValue(&_line);
+  strcpy(artist->genres, str.c_str());
+  binaryFile->write(artist->genres, sizeof(artist->genres));
+
+  str = readValue(&_line);
+  strcpy(artist->name, str.c_str());
+  binaryFile->write(artist->name, sizeof(artist->name));
+
+  str = readValue(&_line);
+  artist->popularity = atoi(str.c_str());
+  binaryFile->write(str.c_str(), sizeof(artist->popularity));
+
+  return artist;
+}
+
+ArtistList *ReadFile::readArtists() {
+  string fullFileLocation = "../artists_example.csv"; //+ fileLocation;
+  fstream file(fullFileLocation, fstream::in);
+
+  if (!file.is_open()) {
+    cout << "Erro ao abrir arquivo artists." << endl;
+    cout << file.fail() << endl;
+    exit(1);
+  }
+
+  ofstream binaryFile("../bin/artists.bin", ofstream::binary);
+
+  if (!binaryFile.is_open()) {
+    cout << "Erro ao abrir arquivo binario." << endl;
+    cout << "Diretorio: <projectFolder>/bin/artists.bin" << endl;
+
+    exit(1);
+  }
+
+  string currentLine;
+  ArtistList *list = new ArtistList();
+  getline(file, currentLine); // Remove first line csv
+
+  while (!file.eof()) {
+    getline(file, currentLine);
+
+    if (currentLine.length() > 0) {
+      Artist *currentArtist = readArtistLine(currentLine, &binaryFile);
+      list->insertEnd(currentArtist);
+    }
+  }
+
+  file.close();
+  binaryFile.close();
+
+  return list;
+}
+
+Artist *ReadFile::readBinaryArtistLine(ifstream *binaryFile, int index) {
+  Artist *artist = new Artist;
+  char *str;
+  int length;
+
+  binaryFile->read(artist->id, sizeof(artist->id));
+
+  length = sizeof(artist->followers);
+  str = new char[length];
+  binaryFile->read(str, length);
+  artist->followers = atoi(str);
+  delete [] str;
+
+  binaryFile->read(artist->genres, sizeof(artist->genres));
+
+  binaryFile->read(artist->name, sizeof(artist->name));
+
+  length = sizeof(artist->popularity);
+  str = new char[length];
+  binaryFile->read(str, length);
+  artist->popularity = atoi(str);
+  delete [] str;
+
+  return artist;
+}
+
+ArtistList *ReadFile::readBinaryArtists() {
+  ifstream binaryFile("../bin/artists.bin", ifstream::in | ifstream::binary);
+
+  if (!binaryFile.is_open()) {
+    cout << "Erro ao abrir arquivo binario de artistas" << endl;
+
+    exit(1);
+  }
+
+  string currentLine;
+  ArtistList *list = new ArtistList();
+
+  binaryFile.seekg (0, binaryFile.end);
+  int fileSize = binaryFile.tellg();
+  binaryFile.seekg (0, binaryFile.beg);
+
+  for (int index = 0; !binaryFile.eof() && binaryFile.tellg() < fileSize; index++) {
+    Artist *artist = readBinaryArtistLine(&binaryFile, index);
+
+    list->insertEnd(artist);
   }
 
   binaryFile.close();

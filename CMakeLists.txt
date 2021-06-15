@@ -14,5 +14,9 @@ set(SOURCES
   ${DIRECTORY}/headers/TrackList.h
   ${DIRECTORY}/headers/Track.h
   ${DIRECTORY}/headers/NodeTrack.h
+  ${DIRECTORY}/classes/ArtistList.cpp
+  ${DIRECTORY}/headers/ArtistList.h
+  ${DIRECTORY}/headers/Artist.h
+  ${DIRECTORY}/headers/NodeArtist.h
 )
 add_executable(cmake-good ${SOURCES})
