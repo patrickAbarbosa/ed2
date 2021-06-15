@@ -1,3 +1,6 @@
+#ifndef TRACK_H
+#define TRACK_H
+
 struct Track {
   char id[22];
   char name[255];
@@ -20,3 +23,5 @@ struct Track {
   float tempo;
   int time_signature;
 };
+
+#endif
