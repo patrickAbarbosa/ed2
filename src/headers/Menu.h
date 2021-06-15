@@ -7,6 +7,9 @@ class Menu {
 	public:
 		Menu();
 		~Menu();
+
+  private:
+    void loadTrackFile();
 };
 
 #endif
