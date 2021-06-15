@@ -182,81 +182,209 @@ Track* ReadFile::readTrackLine(string line, ofstream *binaryFile) {
 
   str = readValue(&_line);
   strcpy(track->id, str.c_str());
-  *binaryFile << track->id;
+  binaryFile->write(track->id, sizeof(track->id));
 
   str = readValue(&_line);
   strcpy(track->name, str.c_str());
-  *binaryFile << track->name;
+  binaryFile->write(track->name, sizeof(track->name));
 
   str = readValue(&_line);
   track->popularity = atoi(str.c_str());
-  *binaryFile << track->popularity;
+  binaryFile->write(str.c_str(), sizeof(track->popularity));
 
   str = readValue(&_line);
   track->duration_ms = atoi(str.c_str());
-  *binaryFile << track->duration_ms;
+  binaryFile->write(str.c_str(), sizeof(track->duration_ms));
 
   str = readValue(&_line);
   track->isExplicit = atoi(str.c_str());
-  *binaryFile << track->isExplicit;
+  binaryFile->write(str.c_str(), sizeof(track->isExplicit));
 
   str = readValue(&_line);
   strcpy(track->artists, str.c_str());
-  *binaryFile << track->artists;
+  binaryFile->write(str.c_str(), sizeof(track->artists));
 
   str = readValue(&_line);
   strcpy(track->id_artists, str.c_str());
-  *binaryFile << track->id_artists;
+  binaryFile->write(str.c_str(), sizeof(track->id_artists));
 
   str = readValue(&_line);
   strcpy(track->release_date, str.c_str());
-  *binaryFile << track->release_date;
+  binaryFile->write(str.c_str(), sizeof(track->release_date));
 
   str = readValue(&_line);
   track->danceability = atoi(str.c_str());
-  *binaryFile << track->danceability;
+  binaryFile->write(str.c_str(), sizeof(track->danceability));
 
   str = readValue(&_line);
   track->energy = atoi(str.c_str());
-  *binaryFile << track->energy;
+  binaryFile->write(str.c_str(), sizeof(track->energy));
 
   str = readValue(&_line);
   track->key = atoi(str.c_str());
-  *binaryFile << track->key;
+  binaryFile->write(str.c_str(), sizeof(track->key));
 
   str = readValue(&_line);
   track->loudness = atoi(str.c_str());
-  *binaryFile << track->loudness;
+  binaryFile->write(str.c_str(), sizeof(track->loudness));
 
   str = readValue(&_line);
   track->speechiness = atoi(str.c_str());
-  *binaryFile << track->speechiness;
+  binaryFile->write(str.c_str(), sizeof(track->speechiness));
 
   str = readValue(&_line);
   track->acousticness = atoi(str.c_str());
-  *binaryFile << track->acousticness;
+  binaryFile->write(str.c_str(), sizeof(track->acousticness));
 
   str = readValue(&_line);
   track->instrumentalness = atoi(str.c_str());
-  *binaryFile << track->instrumentalness;
+  binaryFile->write(str.c_str(), sizeof(track->instrumentalness));
 
   str = readValue(&_line);
   track->liveness = atoi(str.c_str());
-  *binaryFile << track->liveness;
+  binaryFile->write(str.c_str(), sizeof(track->liveness));
 
   str = readValue(&_line);
   track->valence = atoi(str.c_str());
-  *binaryFile << track->valence;
+  binaryFile->write(str.c_str(), sizeof(track->valence));
 
   str = readValue(&_line);
   track->tempo = atoi(str.c_str());
-  *binaryFile << track->tempo;
+  binaryFile->write(str.c_str(), sizeof(track->tempo));
 
   str = readValue(&_line);
   track->time_signature = atoi(str.c_str());
-  *binaryFile << track->time_signature;
+  binaryFile->write(str.c_str(), sizeof(track->time_signature));
 
   return track;
+}
+
+Track* ReadFile::readBinaryTrackLine(ifstream *binaryFile, int index) {
+  Track *track = new Track;
+  char *str;
+  int length;
+
+  binaryFile->read(track->id, sizeof(track->id));
+
+  binaryFile->read(track->name, sizeof(track->name));
+
+  length = sizeof(track->popularity);
+  str = new char[length];
+  binaryFile->read(str, length);
+  track->popularity = atoi(str);
+  delete [] str;
+
+  length = sizeof(track->duration_ms);
+  str = new char[length];
+  binaryFile->read(str, length);
+  track->duration_ms = atoi(str);
+  delete [] str;
+
+  length = sizeof(track->isExplicit);
+  str = new char[length];
+  binaryFile->read(str, length);
+  track->isExplicit = atoi(str);
+  delete [] str;
+
+  binaryFile->read(track->artists, sizeof(track->artists));
+
+  binaryFile->read(track->id_artists, sizeof(track->id_artists));
+
+  binaryFile->read(track->release_date, sizeof(track->release_date));
+
+  length = sizeof(track->danceability);
+  str = new char[length];
+  binaryFile->read(str, length);
+  track->danceability = atoi(str);
+  delete [] str;
+
+  length = sizeof(track->energy);
+  str = new char[length];
+  binaryFile->read(str, length);
+  track->energy = atoi(str);
+  delete [] str;
+
+  length = sizeof(track->key);
+  str = new char[length];
+  binaryFile->read(str, length);
+  track->key = atoi(str);
+  delete [] str;
+
+  length = sizeof(track->loudness);
+  str = new char[length];
+  binaryFile->read(str, length);
+  track->loudness = atoi(str);
+  delete [] str;
+
+  length = sizeof(track->speechiness);
+  str = new char[length];
+  binaryFile->read(str, length);
+  track->speechiness = atoi(str);
+  delete [] str;
+
+  length = sizeof(track->acousticness);
+  str = new char[length];
+  binaryFile->read(str, length);
+  track->acousticness = atoi(str);
+  delete [] str;
+
+  length = sizeof(track->instrumentalness);
+  str = new char[length];
+  binaryFile->read(str, length);
+  track->instrumentalness = atoi(str);
+  delete [] str;
+
+  length = sizeof(track->liveness);
+  str = new char[length];
+  binaryFile->read(str, length);
+  track->liveness = atoi(str);
+  delete [] str;
+
+  length = sizeof(track->valence);
+  str = new char[length];
+  binaryFile->read(str, length);
+  track->valence = atoi(str);
+  delete [] str;
+
+  length = sizeof(track->tempo);
+  str = new char[length];
+  binaryFile->read(str, length);
+  track->tempo = atoi(str);
+  delete [] str;
+
+  length = sizeof(track->time_signature);
+  str = new char[length];
+  binaryFile->read(str, length);
+  track->time_signature = atoi(str);
+  delete [] str;
+
+  return track;
+}
+
+TrackList *ReadFile::readBinaryTracks() {
+  ifstream binaryFile("../bin/tracks.bin", ifstream::in | ifstream::binary);
+
+  if (!binaryFile.is_open()) {
+    cout << "Erro ao abrir arquivo binario" << endl;
+
+    exit(1);
+  }
+
+  string currentLine;
+  TrackList *list = new TrackList();
+
+  binaryFile.seekg (0, binaryFile.end);
+  int fileSize = binaryFile.tellg();
+  binaryFile.seekg (0, binaryFile.beg);
+  for (int index = 0; !binaryFile.eof() && binaryFile.tellg() < fileSize; index++) {
+    Track *track = readBinaryTrackLine(&binaryFile, index);
+
+    list->insertEnd(track);
+  }
+
+  binaryFile.close();
+
+  return list;
 }
 
 TrackList *ReadFile::readTracks() {
