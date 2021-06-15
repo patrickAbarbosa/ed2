@@ -12,10 +12,12 @@ class ReadFile {
 		~ReadFile();
 
     TrackList *readTracks();
+    TrackList *readBinaryTracks();
   private:
     string fileLocation;
-    Track *readTrackLine(string line);
+    Track *readTrackLine(string line, ofstream *binaryFile);
     string readValue(stringstream *line);
+    Track* readBinaryTrackLine(string line, ifstream *binaryFile, int index);
 };
 
 #endif
