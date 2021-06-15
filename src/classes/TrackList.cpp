@@ -56,12 +56,6 @@ void TrackList::insertInIndex(Track *track, int index) {
   }
 }
 
-void printChar(char *str, int size) {
-  for (int index = 0; index < size; index++) {
-    cout << str[index];
-  }
-}
-
 void TrackList::printList() {
   if (first == NULL) {
     cout << "List Empty" << endl;
@@ -73,12 +67,9 @@ void TrackList::printList() {
   while (node != NULL) {
     Track *track = node->getTrack();
 
-    cout << "id: ";
-    printChar(track->id, sizeof(track->id));
-    cout << ", name: ";
-    printChar(track->name, sizeof(track->name));
-    cout << endl;
+    printf("id: %s, name: %s\n", track->id, track->name);
 
     node = node->getNext();
   }
 }
+
