@@ -8,5 +8,11 @@ set(SOURCES
   ./main.cpp
   ${DIRECTORY}/classes/Menu.cpp
   ${DIRECTORY}/headers/Menu.h
+  ${DIRECTORY}/classes/ReadFile.cpp
+  ${DIRECTORY}/headers/ReadFile.h
+  ${DIRECTORY}/classes/TrackList.cpp
+  ${DIRECTORY}/headers/TrackList.h
+  ${DIRECTORY}/headers/Track.h
+  ${DIRECTORY}/headers/NodeTrack.h
 )
 add_executable(cmake-good ${SOURCES})
