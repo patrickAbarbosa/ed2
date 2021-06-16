@@ -10,7 +10,7 @@ class TrackList {
 
     void insertEnd(Track *track);
     void insertInIndex(Track *track, int index);
-
+    NodeTrack *getFirstTrack();
     void printList();
 
   private:

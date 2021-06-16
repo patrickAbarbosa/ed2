@@ -601,6 +601,45 @@ TrackList *ReadFile::testReadBinaryTracks(int numberOfTracks) {
   return list;
 }
 
+void ReadFile::createTracksCSVFile(TrackList *tracks) {
+  ofstream csvFile("../tracks_test.csv");
+
+  if (!csvFile.is_open()) {
+    cout << "Nao foi possivel abrir o arquivo tracks_test_csv" << endl;
+    exit(1);
+  }
+
+  csvFile << "id,name,popularity,duration_ms,explicit,artists,id_artists,release_date,danceability,energy,key,loudness,mode,speechiness,acousticness,instrumentalness,liveness,valence,tempo,time_signature" << endl;
+
+  NodeTrack *track = tracks->getFirstTrack();
+
+  while (track !== NULL) {
+    Track *_track = track->getTrack();
+
+    csvFile
+    << _track->id
+    << _track->name
+    << _track->popularity << ','
+    << _track->duration_ms << ','
+    << _track->isExplicit << ','
+    << _track->artists << ','
+    << _track->id_artists << ','
+    << _track->release_date << ','
+    << _track->danceability << ','
+    << _track->energy << ','
+    << _track->key << ','
+    << _track->loudness << ','
+    << _track->mode << ','
+    << _track->speechiness << ','
+    << _track->acousticness << ','
+    << _track->instrumentalness << ','
+    << _track->liveness << ','
+    << _track->valence << ','
+    << _track->tempo << ','
+    << _track->time_signature << endl;
+  }
+}
+
 void ReadFile::testBinaryTrackFile() {
   int menuOption = -1;
   TrackList *tracks = NULL;

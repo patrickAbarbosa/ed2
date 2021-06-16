@@ -73,3 +73,6 @@ void TrackList::printList() {
   }
 }
 
+NodeTrack *TrackList::getFirstTrack() {
+  return first;
+}

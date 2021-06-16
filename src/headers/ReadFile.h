@@ -31,6 +31,7 @@ class ReadFile {
     int calculateBinaryArtistPosition(string variableName, int currentLine);
 
     TrackList *testReadBinaryTracks(int numberOfTracks);
+    void createTracksCSVFile(TrackList *tracks);
 };
 
 #endif
