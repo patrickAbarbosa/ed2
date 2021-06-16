@@ -121,6 +121,11 @@ int calculateColumn(string variableName) {
   }
   column += sizeof(track.loudness);
 
+  if (variableName == "mode"){
+    return column;
+  }
+  column += sizeof(track.mode);
+
   if (variableName == "speechiness"){
     return column;
   }
@@ -151,7 +156,7 @@ int calculateColumn(string variableName) {
   }
   column += sizeof(track.tempo);
 
-  if (variableName == "tempo"){
+  if (variableName == "time_signature"){
     return column;
   }
   column += sizeof(track.time_signature);
@@ -170,7 +175,7 @@ int calculateColumn(string variableName) {
 int ReadFile::calculateBinaryTrackPosition(string variableName, int currentLine) {
   int _linearLine = calculateColumn("") * currentLine;
 
-  return _linearLine + calculateColumn(variableName);
+  return _linearLine;
 }
 
 /**
@@ -234,6 +239,10 @@ Track* ReadFile::readTrackLine(string line, ofstream *binaryFile) {
   str = readValue(&_line);
   track->loudness = atoi(str.c_str());
   binaryFile->write(str.c_str(), sizeof(track->loudness));
+
+  str = readValue(&_line);
+  track->mode = atoi(str.c_str());
+  binaryFile->write(str.c_str(), sizeof(track->mode));
 
   str = readValue(&_line);
   track->speechiness = atoi(str.c_str());
@@ -303,100 +312,101 @@ TrackList *ReadFile::readTracks() {
   return list;
 }
 
-Track* ReadFile::readBinaryTrackLine(ifstream *binaryFile, int index) {
+Track* ReadFile::readBinaryTrackLine(ifstream *binaryFile) {
+  Track auxliaryTrack;
   Track *track = new Track;
   char *str;
   int length;
 
-  binaryFile->read(track->id, sizeof(track->id));
+  binaryFile->read(track->id, sizeof(auxliaryTrack.id));
 
-  binaryFile->read(track->name, sizeof(track->name));
+  binaryFile->read(track->name, sizeof(auxliaryTrack.name));
 
-  length = sizeof(track->popularity);
+  length = sizeof(auxliaryTrack.popularity);
   str = new char[length];
   binaryFile->read(str, length);
   track->popularity = atoi(str);
   delete [] str;
 
-  length = sizeof(track->duration_ms);
+  length = sizeof(auxliaryTrack.duration_ms);
   str = new char[length];
   binaryFile->read(str, length);
   track->duration_ms = atoi(str);
   delete [] str;
 
-  length = sizeof(track->isExplicit);
+  length = sizeof(auxliaryTrack.isExplicit);
   str = new char[length];
   binaryFile->read(str, length);
   track->isExplicit = atoi(str);
   delete [] str;
 
-  binaryFile->read(track->artists, sizeof(track->artists));
+  binaryFile->read(track->artists, sizeof(auxliaryTrack.artists));
 
-  binaryFile->read(track->id_artists, sizeof(track->id_artists));
+  binaryFile->read(track->id_artists, sizeof(auxliaryTrack.id_artists));
 
-  binaryFile->read(track->release_date, sizeof(track->release_date));
+  binaryFile->read(track->release_date, sizeof(auxliaryTrack.release_date));
 
-  length = sizeof(track->danceability);
+  length = sizeof(auxliaryTrack.danceability);
   str = new char[length];
   binaryFile->read(str, length);
   track->danceability = atoi(str);
   delete [] str;
 
-  length = sizeof(track->energy);
+  length = sizeof(auxliaryTrack.energy);
   str = new char[length];
   binaryFile->read(str, length);
   track->energy = atoi(str);
   delete [] str;
 
-  length = sizeof(track->key);
+  length = sizeof(auxliaryTrack.key);
   str = new char[length];
   binaryFile->read(str, length);
   track->key = atoi(str);
   delete [] str;
 
-  length = sizeof(track->loudness);
+  length = sizeof(auxliaryTrack.loudness);
   str = new char[length];
   binaryFile->read(str, length);
   track->loudness = atoi(str);
   delete [] str;
 
-  length = sizeof(track->speechiness);
+  length = sizeof(auxliaryTrack.speechiness);
   str = new char[length];
   binaryFile->read(str, length);
   track->speechiness = atoi(str);
   delete [] str;
 
-  length = sizeof(track->acousticness);
+  length = sizeof(auxliaryTrack.acousticness);
   str = new char[length];
   binaryFile->read(str, length);
   track->acousticness = atoi(str);
   delete [] str;
 
-  length = sizeof(track->instrumentalness);
+  length = sizeof(auxliaryTrack.instrumentalness);
   str = new char[length];
   binaryFile->read(str, length);
   track->instrumentalness = atoi(str);
   delete [] str;
 
-  length = sizeof(track->liveness);
+  length = sizeof(auxliaryTrack.liveness);
   str = new char[length];
   binaryFile->read(str, length);
   track->liveness = atoi(str);
   delete [] str;
 
-  length = sizeof(track->valence);
+  length = sizeof(auxliaryTrack.valence);
   str = new char[length];
   binaryFile->read(str, length);
   track->valence = atoi(str);
   delete [] str;
 
-  length = sizeof(track->tempo);
+  length = sizeof(auxliaryTrack.tempo);
   str = new char[length];
   binaryFile->read(str, length);
   track->tempo = atoi(str);
   delete [] str;
 
-  length = sizeof(track->time_signature);
+  length = sizeof(auxliaryTrack.time_signature);
   str = new char[length];
   binaryFile->read(str, length);
   track->time_signature = atoi(str);
@@ -421,7 +431,7 @@ TrackList *ReadFile::readBinaryTracks() {
   int fileSize = binaryFile.tellg();
   binaryFile.seekg (0, binaryFile.beg);
   for (int index = 0; !binaryFile.eof() && binaryFile.tellg() < fileSize; index++) {
-    Track *track = readBinaryTrackLine(&binaryFile, index);
+    Track *track = readBinaryTrackLine(&binaryFile);
 
     list->insertEnd(track);
   }
@@ -558,4 +568,74 @@ ArtistList *ReadFile::readBinaryArtists() {
   binaryFile.close();
 
   return list;
+}
+
+TrackList *ReadFile::testReadBinaryTracks(int numberOfTracks) {
+  ifstream binaryFile("../bin/tracks.bin", ifstream::in | ifstream::binary);
+
+  if (!binaryFile.is_open()) {
+    cout << "Erro ao abrir arquivo binario de Tracks" << endl;
+    exit(1);
+  }
+
+  TrackList *list = new TrackList;
+
+  binaryFile.seekg (0, binaryFile.end);
+  int fileSize = binaryFile.tellg();
+  binaryFile.seekg (0, binaryFile.beg);
+  int totalTracks = ceil(float(float(fileSize) / calculateColumn("")));
+
+  printf("Total: %d\n", fileSize);
+  srand(time(NULL));
+  for (;numberOfTracks > 0; numberOfTracks--) {
+    binaryFile.clear();
+
+    int currentIndex = (int (rand() % totalTracks)) ;
+    int position = calculateBinaryTrackPosition("", currentIndex);
+    binaryFile.seekg(position, binaryFile.beg);
+    Track *track = readBinaryTrackLine(&binaryFile);
+
+    list->insertEnd(track);
+  }
+
+  return list;
+}
+
+void ReadFile::testBinaryTrackFile() {
+  int menuOption = -1;
+  TrackList *tracks = NULL;
+
+  while (menuOption != 9) {
+    cout << "------- Teste Tracks ------\n";
+    cout << "[0] - Exibir em tela\n";
+    cout << "[1] - Arquivo .csv\n";
+    cout << "[8] - Voltar menu principal\n";
+    cout << "[9] - Sair\n";
+    cout << "\nDigite uma opcao: ";
+    cin >> menuOption;
+
+    switch (menuOption) {
+    case 0:
+      tracks = testReadBinaryTracks(10);
+      tracks->printList();
+      delete tracks;
+      break;
+
+    case 1:
+      cout << "Exibir em tela 100 resultados\n";
+      break;
+
+    case 8:
+      cout << "Retornando ao menu anterior\n\n";
+      return;
+    case 9:
+      cout << "bye\n";
+      exit(1);
+      break;
+
+    default:
+      cout << "Erro: Digite uma opcao valida.\n";
+      break;
+    }
+  }
 }

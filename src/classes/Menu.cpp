@@ -6,12 +6,48 @@
 using namespace std;
 
 Menu::Menu() {
-  cout << "Menu starting" << endl;
+  int menuOption = -1;
+  ReadFile * file;
+  file = new ReadFile("");
+  // loadTrackFile();
+  while (menuOption != 9) {
+    cout << "---------- MENU -----------\n";
+    cout << "[0] - Exibir estrutura Track\n";
+    cout << "[1] - Exibir estrutura Artists\n";
+    cout << "[2] - Testar Tracks\n";
+    cout << "[3] - Testar Artists\n";
+    cout << "[9] - Sair\n";
 
-  loadTrackFile();
+    cout << "\nDigite uma opcao: ";
+    cin >> menuOption;
+
+    cout << endl;
+    switch (menuOption)
+    {
+    case 0:
+      cout << "Print estrutura Track" << endl;
+      break;
+    case 1:
+      cout << "Print estrutura Artist" << endl;
+      break;
+    case 2:
+      file->testBinaryTrackFile();
+      break;
+
+    case 3:
+      cout << "Testar Artists" << endl;
+      break;
+    case 9:
+      cout << "Bye =)" << endl;
+      break;
+    default:
+      cout << "Erro: Digite uma opcao válida!" << endl;
+      break;
+    }
+  }
 }
 
-Menu::~Menu() { cout << "Stop Menu" << endl; }
+Menu::~Menu() { cout << "Encerrando Menu" << endl; }
 
 void Menu::loadTrackFile(){
   string fileLocation;
@@ -23,9 +59,10 @@ void Menu::loadTrackFile(){
   ReadFile * file;
   file = new ReadFile(fileLocation);
 
+  TrackList * list = file->readTracks();
   // TrackList *list = file->readBinaryTracks();
 
-  ArtistList *list = file->readBinaryArtists();
+  // ArtistList *list = file->readBinaryArtists();
 
-  list->printList();
+  // list->printList();
 }

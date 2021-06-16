@@ -16,18 +16,21 @@ class ReadFile {
     TrackList *readBinaryTracks();
     ArtistList *readArtists();
     ArtistList *readBinaryArtists();
+    void testBinaryTrackFile();
 
   private:
     string fileLocation;
     string readValue(stringstream *line);
 
     Track *readTrackLine(string line, ofstream *binaryFile);
-    Track* readBinaryTrackLine(ifstream *binaryFile, int index);
+    Track* readBinaryTrackLine(ifstream *binaryFile);
     int calculateBinaryTrackPosition(string variableName, int currentLine);
 
     Artist *readArtistLine(string line, ofstream *binaryFile);
     Artist* readBinaryArtistLine(ifstream *binaryFile, int index);
     int calculateBinaryArtistPosition(string variableName, int currentLine);
+
+    TrackList *testReadBinaryTracks(int numberOfTracks);
 };
 
 #endif
