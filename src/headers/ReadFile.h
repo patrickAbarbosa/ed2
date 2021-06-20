@@ -18,6 +18,9 @@ class ReadFile {
     void printTrackStruct();
     void testBinaryTrackFile();
 
+    void printArtistStruct();
+    void testBinaryArtistFile();
+
   private:
     ReadTrackFile *readTracks;
     ReadArtistFile *readArtists;

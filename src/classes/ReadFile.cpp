@@ -71,3 +71,23 @@ void ReadFile::testBinaryTrackFile() {
     readTracks->testBinaryTrackFile();
   }
 }
+
+/**
+ * printArtistStruct
+ *
+ * Imprime no console a estrutura Artists
+ */
+void ReadFile::printArtistStruct() {
+  readArtists->printStruct();
+}
+
+/**
+ * testBinaryArtistFile
+ *
+ * chama o método de teste de ReadArtistFile
+ */
+void ReadFile::testBinaryArtistFile() {
+  if (readArtists) {
+    readArtists->testBinaryArtistFile();
+  }
+}

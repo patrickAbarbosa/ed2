@@ -116,7 +116,7 @@ void Menu::visible() {
       break;
     // [1] - Exibir estrutura Artists
     case 1:
-      cout << "Print estrutura Artist" << endl;
+      readFile->printArtistStruct();
       break;
     // [2] - Testar Tracks
     case 2:
@@ -124,7 +124,7 @@ void Menu::visible() {
       break;
     // [3] - Testar Artists
     case 3:
-      cout << "Testar Artists" << endl;
+      readFile->testBinaryArtistFile();
       break;
 
     // [9] - Sair

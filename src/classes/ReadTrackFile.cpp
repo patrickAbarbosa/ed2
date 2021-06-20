@@ -335,9 +335,8 @@ Track* ReadTrackFile::readBinaryTrackLine(ifstream *binaryFile) {
 /**
  * readTracks
  *
- * le arquivo .csv de Tracks e retorna uma lista de tracks
+ * le arquivo .csv de Tracks grava no binário Tracks.bin
  *
- * @return {TrackList*}
  */
 void ReadTrackFile::readTracks() {
   fstream file(tracksFileLocation, fstream::in);
@@ -499,30 +498,35 @@ TrackList *ReadTrackFile::testReadBinaryTracks(int numberOfTracks) {
  */
 void ReadTrackFile::printStruct() {
   cout << "------ Track Struct -------" << endl;
-    cout << "char id[22]\n";
-    cout << "char name[255]\n";
-    cout << "int popularity\n";
-    cout << "int duration_ms\n";
-    cout << "bool isExplicit\n";
-    cout << "char artists[1000]\n";
-    cout << "char id_artists[440]\n";
-    cout << "char release_date[10]\n";
-    cout << "float danceability\n";
-    cout << "float energy\n";
-    cout << "int key\n";
-    cout << "float loudness\n";
-    cout << "bool mode\n";
-    cout << "float speechiness\n";
-    cout << "float acousticness\n";
-    cout << "float instrumentalness\n";
-    cout << "float liveness\n";
-    cout << "float valence\n";
-    cout << "float tempo\n";
-    cout << "int time_signature\n";
+  cout << "char id[22]\n";
+  cout << "char name[255]\n";
+  cout << "int popularity\n";
+  cout << "int duration_ms\n";
+  cout << "bool isExplicit\n";
+  cout << "char artists[1000]\n";
+  cout << "char id_artists[440]\n";
+  cout << "char release_date[10]\n";
+  cout << "float danceability\n";
+  cout << "float energy\n";
+  cout << "int key\n";
+  cout << "float loudness\n";
+  cout << "bool mode\n";
+  cout << "float speechiness\n";
+  cout << "float acousticness\n";
+  cout << "float instrumentalness\n";
+  cout << "float liveness\n";
+  cout << "float valence\n";
+  cout << "float tempo\n";
+  cout << "int time_signature\n";
 
-    cout << endl;
+  cout << endl;
 }
 
+/**
+ * testBinaryTrackFile
+ *
+ * imprime menu de testes do arquivo binário Tracks.bin
+ */
 void ReadTrackFile::testBinaryTrackFile() {
   int menuOption = -1;
   TrackList *tracks = NULL;
@@ -546,14 +550,13 @@ void ReadTrackFile::testBinaryTrackFile() {
 
     //[1] - Arquivo .csv
     case 1:
-      tracks = testReadBinaryTracks(1);
+      tracks = testReadBinaryTracks(100);
       createTracksCSVFile(tracks);
       delete tracks;
       break;
 
     //[8] - Voltar menu principal
     case 8:
-      cout << "Retornando ao menu anterior\n\n";
       return;
 
     //[9] - Sair
