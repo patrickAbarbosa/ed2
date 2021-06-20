@@ -10,7 +10,7 @@ class ArtistList {
 
     void insertEnd(Artist *artist);
     void insertInIndex(Artist *artist, int index);
-
+    NodeArtist* getFirstArtist();
     void printList();
 
   private:

@@ -2,36 +2,28 @@
 #define READFILE_H_INCLUDED
 
 #include <iostream>
-#include "./TrackList.h"
-#include "./ArtistList.h"
+#include "./ReadArtistFile.h"
+#include "./ReadTrackFile.h"
 
 using namespace std;
 
 class ReadFile {
 	public:
-		ReadFile(string fileLocation);
+		ReadFile(string tracksFileLocation, string artistsFileLocation);
 		~ReadFile();
 
-    TrackList *readTracks();
-    TrackList *readBinaryTracks();
-    ArtistList *readArtists();
-    ArtistList *readBinaryArtists();
+    void readTracksFile();
+    void readArtistsFile();
+
+    void printTrackStruct();
     void testBinaryTrackFile();
 
+    void printArtistStruct();
+    void testBinaryArtistFile();
+
   private:
-    string fileLocation;
-    string readValue(stringstream *line);
-
-    Track *readTrackLine(string line, ofstream *binaryFile);
-    Track* readBinaryTrackLine(ifstream *binaryFile);
-    int calculateBinaryTrackPosition(string variableName, int currentLine);
-
-    Artist *readArtistLine(string line, ofstream *binaryFile);
-    Artist* readBinaryArtistLine(ifstream *binaryFile, int index);
-    int calculateBinaryArtistPosition(string variableName, int currentLine);
-
-    TrackList *testReadBinaryTracks(int numberOfTracks);
-    void createTracksCSVFile(TrackList *tracks);
+    ReadTrackFile *readTracks;
+    ReadArtistFile *readArtists;
 };
 
 #endif

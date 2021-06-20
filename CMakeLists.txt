@@ -6,10 +6,16 @@ include_directories(${DIRECTORY})
 
 set(SOURCES
   ./main.cpp
+  ${DIRECTORY}/headers/Helpers.h
+  ${DIRECTORY}/classes/Helpers.cpp
   ${DIRECTORY}/classes/Menu.cpp
   ${DIRECTORY}/headers/Menu.h
   ${DIRECTORY}/classes/ReadFile.cpp
   ${DIRECTORY}/headers/ReadFile.h
+  ${DIRECTORY}/classes/ReadArtistFile.cpp
+  ${DIRECTORY}/headers/ReadArtistFile.h
+  ${DIRECTORY}/classes/ReadTrackFile.cpp
+  ${DIRECTORY}/headers/ReadTrackFile.h
   ${DIRECTORY}/classes/TrackList.cpp
   ${DIRECTORY}/headers/TrackList.h
   ${DIRECTORY}/headers/Track.h

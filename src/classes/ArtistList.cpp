@@ -56,10 +56,8 @@ void ArtistList::insertInIndex(Artist *artist, int index) {
   }
 }
 
-void printChar(char *str, int size) {
-  for (int index = 0; index < size; index++) {
-    cout << str[index];
-  }
+NodeArtist *ArtistList::getFirstArtist() {
+  return first;
 }
 
 void ArtistList::printList() {

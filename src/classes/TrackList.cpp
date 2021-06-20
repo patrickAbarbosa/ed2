@@ -67,7 +67,15 @@ void TrackList::printList() {
   while (node != NULL) {
     Track *track = node->getTrack();
 
-    printf("id: %s, name: %s\n", track->id, track->name);
+    printf("id: %s, name: %s, ", track->id, track->name);
+    printf("popularity: %d, duration_ms: %d, ", track->popularity, track->duration_ms);
+    printf("is_explicit: %s, artists: %s, ", track->isExplicit ? "1" : "0", track->artists);
+    printf("id_artists: %s, release_date: %s, ", track->id_artists, track->release_date);
+    printf("danceability: %f, energy: %f, ", track->danceability, track->energy);
+    printf("key: %d, loudness: %f, ", track->key, track->loudness);
+    printf("mode: %s, speechiness: %f, ", track->mode ? "1" : "0", track->speechiness);
+    printf("liveness: %f, valence: %f, ", track->liveness, track->valence);
+    printf("tempo: %f, time_signature: %d\n", track->tempo, track->time_signature);
 
     node = node->getNext();
   }

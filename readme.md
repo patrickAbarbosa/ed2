@@ -5,12 +5,12 @@
 ### Build
 
 ```shell
-cd build && cmake .. && cmake . && cmake --build . && cd ..
+cd build && cmake .. && cmake . && cmake --build . && cd .. && cd build && ./cmake-good && cd ..
 ```
 
 ### Running
 ```shell
-cd build && ./cmake-good && cd ..
+cd build && ./cmake-good <tracksDirectory> <artistsDirectory> && cd ..
 ```
 
 ## Author
